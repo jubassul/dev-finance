@@ -1,3 +1,4 @@
+
 /* removendo  propriedades padrões do user agent,
 uso um seletor universal para isso*/
 
@@ -8,17 +9,93 @@ uso um seletor universal para isso*/
 }
 
 body {
-    background-color: #d6cbc1;
+    background-color: #e1dcc9;
     font-family: 'Poppins', sans-serif;
+}
+/* esse container está no main, 
+representando todo o conteúdo do texto,
+coloquei ele para que eu tenha uma 
+separação entre o background do header e
+todo o meu texto*/
+.container {
+    width: min(90vw, 800px);
+    margin: auto;
+}
+/* especificações e cores no: (h2,h3,th e td) */
+h2 {
+   margin-top: 3.2rem; 
+   margin-bottom: 0.8rem;
+   color: #efb758;
+   font-weight: normal;
+}
+p {
+ color: #17395c;
+}
+
+th {
+color: #17395c;
+}
+td {
+background-color: #efb758;
+border-spacing: 0 0.5rem;
+opacity: 0.8;
+border-radius: 0.25rem;
+text-align: center;
+padding: 0.5rem 0 0 0.5rem;
 }
 /* Header- cabecalho */
 header {
-    background-color: #084c61;
+    background-color:#17395c;
     padding: 2rem 0 10rem;
     text-align: center;
 }
 #logo {
- color: #d6cbc1;   
+ color:#efb758;
  font-weight: 500;
 }
 /* Body- balance */
+#balance {
+    margin-top: -8rem;
+}
+#balance h2 {
+    margin-top: 0;
+}
+
+/* body- cards */
+.card {
+background: #efb758;
+padding: 1.5rem 2rem;
+border-radius: 0.90rem;
+margin-bottom: 2rem;
+}
+.card h3 {
+color: #e1dcc9;
+font-weight: bold;
+font-size: 1rem;
+}
+.card p {
+line-height: 3rem;
+    font-size: 2rem; 
+    margin-top: 1rem;
+}
+/* body- table */
+#data-table{
+width: 100%;
+}
+td.description{
+    color: #17395c;
+}
+td.income{
+    color: #31B156;
+}
+td.expense{
+    color: #c24229;
+}
+td.date{
+color: #17395c;
+}
+/*body- footer */
+footer {
+text-align: center;
+padding: 4rem 0 2rem;
+}
