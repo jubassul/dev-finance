@@ -1,0 +1,24 @@
+/* removendo  propriedades padrões do user agent,
+uso um seletor universal para isso*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #d6cbc1;
+    font-family: 'Poppins', sans-serif;
+}
+/* Header- cabecalho */
+header {
+    background-color: #084c61;
+    padding: 2rem 0 10rem;
+    text-align: center;
+}
+#logo {
+ color: #d6cbc1;   
+ font-weight: 500;
+}
+/* Body- balance */
