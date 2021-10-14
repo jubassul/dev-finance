@@ -127,9 +127,10 @@ a {
 }
 
 .button.new {
-    display: inline-block;
-    margin-bottom: .8rem;
+    display: inline-block; 
+     margin-bottom: .8rem; 
 }
+
 
 /* body- table */
 
@@ -153,7 +154,7 @@ td.date {
     color: #17395c;
 }
 
-/* body-modal */
+/* body-modal e form */
 
 .modal-overlay {
     width: 100%;
@@ -177,6 +178,27 @@ td.date {
     background-color: #e1dcc9;
     padding: 2.4rem;
 }
+
+#form {
+    max-width: 500px;
+}
+
+#form h2{
+margin-top: 0;
+}
+
+input{
+    border:none;
+    border-radius: 0.2rem;
+    padding: 0.3rem;
+    margin-top: 0.3rem;
+    width: 100%;
+}
+.input-group{
+    opacity: 0.6;
+}
+
+
 
 /*body- footer */
 
