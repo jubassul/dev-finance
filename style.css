@@ -1,101 +1,199 @@
-
 /* removendo  propriedades padrões do user agent,
 uso um seletor universal para isso*/
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* trabalhando a responsividade do html */
+
+html {
+    font-size: 93.75%;
 }
 
 body {
     background-color: #e1dcc9;
     font-family: 'Poppins', sans-serif;
 }
+
+/* a classe sr-only colocada nos h2 balanço e transação, serve para
+acessibilidade, ou seja, tirei o title da tela
+com as "tricks", mas não tirei para os leitores
+de tela*/
+
+.sr-only {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    padding: 0px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
 /* esse container está no main, 
 representando todo o conteúdo do texto,
 coloquei ele para que eu tenha uma 
 separação entre o background do header e
 todo o meu texto*/
+
 .container {
     width: min(90vw, 800px);
     margin: auto;
 }
-/* especificações e cores no: (h2,h3,th e td) */
+
+/* especificações e cores no: (h2,p,th e td) */
+
 h2 {
-   margin-top: 3.2rem; 
-   margin-bottom: 0.8rem;
-   color: #efb758;
-   font-weight: normal;
+    margin-top: 3.2rem;
+    margin-bottom: 0.8rem;
+    color: #efb758;
+    font-weight: normal;
 }
+
 p {
- color: #17395c;
+    color: #17395c;
 }
 
 th {
-color: #17395c;
+    color: #17395c;
 }
+
 td {
-background-color: #efb758;
-border-spacing: 0 0.5rem;
-opacity: 0.8;
-border-radius: 0.25rem;
-text-align: center;
-padding: 0.5rem 0 0 0.5rem;
+    background-color: #efb758;
+    border-spacing: 0 0.5rem;
+    opacity: 0.8;
+    border-radius: 0.25rem;
+    text-align: center;
+    padding: 0.5rem 0 0 0.5rem;
 }
+
 /* Header- cabecalho */
+
 header {
-    background-color:#17395c;
+    background-color: #17395c;
     padding: 2rem 0 10rem;
     text-align: center;
 }
+
 #logo {
- color:#efb758;
- font-weight: 500;
+    color: #efb758;
+    font-weight: 500;
 }
+
 /* Body- balance */
+
 #balance {
     margin-top: -8rem;
 }
+
 #balance h2 {
     margin-top: 0;
 }
 
 /* body- cards */
+
 .card {
-background: #efb758;
-padding: 1.5rem 2rem;
-border-radius: 0.90rem;
-margin-bottom: 2rem;
+    background: #efb758;
+    padding: 1.5rem 2rem;
+    border-radius: 0.90rem;
+    margin-bottom: 2rem;
 }
+
 .card h3 {
-color: #e1dcc9;
-font-weight: bold;
-font-size: 1rem;
+    color: #e1dcc9;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
 .card p {
-line-height: 3rem;
-    font-size: 2rem; 
+    line-height: 3rem;
+    font-size: 2rem;
     margin-top: 1rem;
 }
-/* body- table */
-#data-table{
-width: 100%;
+
+/* body - links e button */
+
+a {
+    color: #17395c;
+    text-decoration: none;
 }
-td.description{
+
+.button.new {
+    display: inline-block;
+    margin-bottom: .8rem;
+}
+
+/* body- table */
+
+#data-table {
+    width: 100%;
+}
+
+td.description {
     color: #17395c;
 }
-td.income{
+
+td.income {
     color: #31B156;
 }
-td.expense{
+
+td.expense {
     color: #c24229;
 }
-td.date{
-color: #17395c;
+
+td.date {
+    color: #17395c;
 }
+
+/* body-modal */
+
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background-color: #e1dcc9;
+    padding: 2.4rem;
+}
+
 /*body- footer */
+
 footer {
-text-align: center;
-padding: 4rem 0 2rem;
+    text-align: center;
+    padding: 4rem 0 2rem;
+}
+
+/* responsive */
+
+@media (min-width: 800px) {
+    html {
+        font-size: 87.5%
+    }
+    #balance {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem;
+    }
 }

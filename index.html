@@ -11,35 +11,49 @@
 <body>
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
+        rel="stylesheet">
     <header>
-        <h1 id="logo"> dev.finances </h1>
+        <!-- logo -->
+        <img src="arquivos/logo.svg" alt="logo dev finance">
     </header>
-    <main class="container" >
+    <main class="container">
         <section id="balance">
-            <h2> Balanço </h2>
+            <h2 class="sr-only"> Balanço </h2>
             <div class="card">
-                <h3> Entradas </h3>
+                <h3>
+                    <span> Entradas </span>
+                    <img src="arquivos/income.svg" alt="imagem de entradas">
+                </h3>
                 <p> R$ 5.000,00 </p>
             </div>
             <div class="card">
-                <h3> Saídas </h3>
+                <h3>
+                    <span> Saídas </span>
+                    <img src="arquivos/expense.svg" alt="imagem de saídas">
+                </h3>
                 <p> R$ 2.000,00 </p>
             </div>
             <div class="card">
-                <h3> Total </h3>
+                <h3>
+                    <span> Total </span>
+                    <img src="arquivos/total.svg" alt="imagem de total">
+                </h3>
                 <p> R$ 3.000,00 </p>
             </div>
         </section>
         <section id="transaction">
-            <h2> Transações </h2>
+            <h2 class="sr-only">Transações </h2>
+            <a href="#" class="button new"> + Nova Transação</a>
             <table id="data-table">
                 <thead>
                     <tr>
                         <th> Descrição</th>
                         <th> Valor </th>
                         <th> Data </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,21 +61,44 @@
                         <td class="description"> Luz </td>
                         <td class="expense"> - R$ 300,00 </td>
                         <td class="date"> 01.03.2020</td>
+                        <td>
+                            <img src="arquivos/minus.svg">
+                        </td>
                     </tr>
                     <tr>
                         <td class="description"> Criação Website </td>
                         <td class="income"> R$ 5.000,00 </td>
                         <td class="date"> 02.03.2020</td>
+                        <td>
+                            <img src="arquivos/minus.svg">
+                        </td>
                     </tr>
                     <tr>
                         <td class="description"> Aluguel </td>
                         <td class="expense"> - R$ 1.500,00 </td>
                         <td class="date"> 03.03.2020</td>
+                        <td>
+                            <img src="arquivos/minus.svg">
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </section>
     </main>
+    <div class="modal-overlay active">
+        <div class="modal">
+            <div id="form">
+                <h2> Nova Transação</h2>
+                <form action="">
+                    <div class="input-group">
+                        <label class="sr-only" for="description">Descrição</label>
+                        <input type="text" id="description" name="description" placeholder="Descrição" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
     <footer> </footer>
 </body>
 
