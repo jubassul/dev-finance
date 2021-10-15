@@ -79,12 +79,6 @@ header {
     padding: 2rem 0 10rem;
     text-align: center;
 }
-
-#logo {
-    color: #efb758;
-    font-weight: 500;
-}
-
 /* Body- balance */
 
 #balance {
@@ -213,6 +207,9 @@ footer {
     html {
         font-size: 87.5%
     }
+/* esse display grid, com esse template, faz com que os cards fiquem
+um ao lado do outro, coloquei também o span que é um elemento inline para
+os cards */
     #balance {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
