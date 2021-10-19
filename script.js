@@ -19,7 +19,7 @@ const Modal = {
     },
 
 }
-//criando objetos com os dados da table
+//criando objetos com os dados da table dentro do array
 const transactions =
     [{
         id: 1,
@@ -49,10 +49,18 @@ const transactions =
 const Transaction = {
     //criou um atalho p/ todas as transacoes
     all: transactions,
+//funcionalidade de add transacoes
     add(transaction){
 Transaction.all.push(transaction)
 App.reload()
     },
+//funcionalidade de remover transações
+remove(index) {
+    Transaction.all.splice(index, 1)
+    
+    App.reload()
+    },
+    
     //funcionalidade de somar as entradas
     incomes() { 
         let income = 0;
@@ -148,6 +156,49 @@ return signal +value
 }
 }
 
+const Form = {
+//conexão entre o html e o js, estou pegando cada um dos inputs
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    getValues(){
+    return {
+        description: Form.description.value,
+        amount: Form.amount.value,
+        date: Form.date.value
+    }
+    },
+    validateFields() {
+    const {description, amount, date} = Form.getValues()
+    //verificando se eles estão vazios
+    if(description.trim() === "" || amount.trim() === "" || date.trim() === "") {
+    throw new Error("Por Favor, preencha todos os campos")
+    }
+    },
+
+
+
+//interrompendo o comportamento padrão do submit
+    submit(event) {
+    event.preventDefault()
+//capturar o erro disparado pelo throw
+    try{
+         //verificar se todas as informacoes foram preenchidas
+    Form.validateFields()
+    //formator os dados para salvar 
+    //Form.formatData()
+    //salvar 
+    //apagar os dados do formulario
+    //quero que o modal feche
+    //atualizar a aplicaçao
+    } catch (error){
+        alert(error.message)
+    }
+
+    }
+}
+
 //para cada elemento será executado, como argumento, uma funcionalidade
 //enquanto o i for menor que 3, isso irá se repetir.
 //for(let i =0; i<3; i++){
@@ -159,18 +210,10 @@ Transaction.all.forEach(transaction => {
 DOM.addTransaction(transaction)
 })
 DOM.updateBalance()
-    },
+ },
 reload() {
     DOM.clearTransactions()
     App.init()
 },
 }
 App.init()
-
-
-Transaction.add({
-    id: 39,
-description: 'oi',
-amount: 200,
-date: '23/02/2020',
-})
