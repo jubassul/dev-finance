@@ -13,6 +13,7 @@ const Modal = {
   },
 };
 //criando objetos com os dados da table dentro do array
+//dados mockados = dados fixos, o usuário não altera
 const transactions = [
   {
     id: 1,
@@ -91,12 +92,13 @@ const Transaction = {
 //eu preciso pegar os dados da table que estão no objeto e colocar lá no html: irei substituir os dados da table do html com os dados do js//
 const DOM = {
   transactionsContainer: document.querySelector("#data-table tbody"),
-
+//adicionar os dados html da table
   addTransaction(transaction, index) {
     const tr = document.createElement("tr");
     tr.innerHTML = DOM.innerHTMLTransaction(transaction);
     DOM.transactionsContainer.appendChild(tr);
   },
+
   innerHTMLTransaction(transaction) {
     //se transaction.amount for menor que zero, será income, se não for, será expense, na tela: income ficará vermelho e expense verde, coloquei essa variável, interpolada na linha do html, onde aparece os números
     const CSSclass = transaction.amount > 0 ? "income" : "expense";
@@ -106,14 +108,13 @@ const DOM = {
     <td class="${CSSclass}">${amount}</td> 
      <td class="date">${transaction.date}</td>
      <td>
-         <img src="arquivos/minus.svg">
+     <img src="arquivos/minus.svg">
      </td>
- `;
-    return html;
+     `;
+     return html;
+     //peguei o id da tag p do html e estou imprindo na tela, usando innerHTML
   },
-
-  //peguei o id da tag p do html e estou imprindo na tela, usando innerHTML
-
+//atualizar os valores das divs 
   updateBalance() {
     document.getElementById("incomesDisplay").innerHTML = Utils.formatCurrency(
       Transaction.incomes()
@@ -125,12 +126,13 @@ const DOM = {
       Transaction.total()
     );
   },
+//limpar os dados da tela
   clearTransactions() {
     DOM.transactionsContainer.innerHTML = "";
   },
 };
 
-//funcionalidade para o sinal do número (- ou nada)
+//formatar moeda 
 const Utils = {
   formatCurrency(value) {
     //se o valor for medor que zero, entao retorna -, se não for, não irá retornar nada, ou seja, ficará sem o sinal
@@ -152,7 +154,7 @@ const Form = {
   description: document.querySelector("input#description"),
   amount: document.querySelector("input#amount"),
   date: document.querySelector("input#date"),
-
+//pegar os valores do input
   getValues() {
     return {
       description: Form.description.value,
@@ -160,6 +162,7 @@ const Form = {
       date: Form.date.value,
     };
   },
+  //validar esses valores 
   validateFields() {
     const { description, amount, date } = Form.getValues();
     //verificando se eles estão vazios
@@ -172,13 +175,30 @@ const Form = {
     }
   },
 
-  //interrompendo o comportamento padrão do submit
+//   formatValues() {
+//     let { description, amount, date } = Form.getValues()
+    
+//     amount = Utils.formatAmount(amount)
+
+//     date = Utils.formatDate(date)
+
+//     return {
+//         description,
+//         amount,
+//         date
+//     }
+// },
+
+  //salvar os dados do form
   submit(event) {
     event.preventDefault();
     //capturar o erro disparado pelo throw
     try {
       //verificar se todas as informacoes foram preenchidas
       Form.validateFields();
+      // const transaction = Form.formatValues();
+      //adiciona a transação
+      // Transaction.add(transaction);
       //formator os dados para salvar
       //Form.formatData()
       //salvar
@@ -189,6 +209,8 @@ const Form = {
       alert(error.message);
     }
   },
+
+  // formatData(){}
 };
 
 //para cada elemento será executado, como argumento, uma funcionalidade
