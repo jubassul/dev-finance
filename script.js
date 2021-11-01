@@ -12,28 +12,15 @@ const Modal = {
     document.querySelector(".modal-overlay").classList.remove("active");
   },
 };
-//criando objetos com os dados da table dentro do array
-//dados mockados = dados fixos, o usuário não altera
-const transactions = [
-  {
-    id: 1,
-    description: "Luz",
-    amount: -30000,
-    date: "01/03/2020",
+//guardando as informações
+const Storage ={
+  get () {
+  return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
   },
-  {
-    id: 2,
-    description: "Website",
-    amount: 500000,
-    date: "01/03/2020",
-  },
-  {
-    id: 3,
-    description: "Aluguel",
-    amount: -150000,
-    date: "01/03/2020",
-  },
-];
+  set (transactions) {
+    localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+  }
+  }
 
 //passo a passo:
 // 1) somar as entradas
@@ -41,8 +28,7 @@ const transactions = [
 // 3) entrada - saídas = total
 
 const Transaction = {
-  //criou um atalho p/ todas as transacoes
-  all: transactions,
+  all: Storage.get(),
   //funcionalidade de add transacoes
   add(transaction) {
     Transaction.all.push(transaction);
@@ -92,14 +78,15 @@ const Transaction = {
 //eu preciso pegar os dados da table que estão no objeto e colocar lá no html: irei substituir os dados da table do html com os dados do js//
 const DOM = {
   transactionsContainer: document.querySelector("#data-table tbody"),
-//adicionar os dados html da table
+  //adicionar os dados html da table
   addTransaction(transaction, index) {
     const tr = document.createElement("tr");
-    tr.innerHTML = DOM.innerHTMLTransaction(transaction);
+    tr.innerHTML = DOM.innerHTMLTransaction(transaction, index);
+    tr.dataset.index = index
     DOM.transactionsContainer.appendChild(tr);
   },
 
-  innerHTMLTransaction(transaction) {
+  innerHTMLTransaction(transaction,index) {
     //se transaction.amount for menor que zero, será income, se não for, será expense, na tela: income ficará vermelho e expense verde, coloquei essa variável, interpolada na linha do html, onde aparece os números
     const CSSclass = transaction.amount > 0 ? "income" : "expense";
     const amount = Utils.formatCurrency(transaction.amount);
@@ -108,13 +95,13 @@ const DOM = {
     <td class="${CSSclass}">${amount}</td> 
      <td class="date">${transaction.date}</td>
      <td>
-     <img src="arquivos/minus.svg">
+     <img onclick="Transaction.remove(${index})"src="arquivos/minus.svg">
      </td>
      `;
-     return html;
-     //peguei o id da tag p do html e estou imprindo na tela, usando innerHTML
+    return html;
+    //peguei o id da tag p do html e estou imprindo na tela, usando innerHTML
   },
-//atualizar os valores das divs 
+  //atualizar os valores das divs
   updateBalance() {
     document.getElementById("incomesDisplay").innerHTML = Utils.formatCurrency(
       Transaction.incomes()
@@ -126,14 +113,22 @@ const DOM = {
       Transaction.total()
     );
   },
-//limpar os dados da tela
+  //limpar os dados da tela
   clearTransactions() {
     DOM.transactionsContainer.innerHTML = "";
   },
 };
 
-//formatar moeda 
+//formatar moeda
 const Utils = {
+  formatAmount(value) {
+    value = Number(value) * 100;
+    return value;
+  },
+  formatDate(date) {
+    const splittedDate = date.split("-");
+    return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`;
+  },
   formatCurrency(value) {
     //se o valor for medor que zero, entao retorna -, se não for, não irá retornar nada, ou seja, ficará sem o sinal
     const signal = Number(value) < 0 ? "-" : "";
@@ -154,7 +149,7 @@ const Form = {
   description: document.querySelector("input#description"),
   amount: document.querySelector("input#amount"),
   date: document.querySelector("input#date"),
-//pegar os valores do input
+  //pegar os valores do input
   getValues() {
     return {
       description: Form.description.value,
@@ -162,7 +157,7 @@ const Form = {
       date: Form.date.value,
     };
   },
-  //validar esses valores 
+  //validar esses valores
   validateFields() {
     const { description, amount, date } = Form.getValues();
     //verificando se eles estão vazios
@@ -175,42 +170,43 @@ const Form = {
     }
   },
 
-//   formatValues() {
-//     let { description, amount, date } = Form.getValues()
-    
-//     amount = Utils.formatAmount(amount)
-
-//     date = Utils.formatDate(date)
-
-//     return {
-//         description,
-//         amount,
-//         date
-//     }
-// },
-
   //salvar os dados do form
+  FormatValues() {
+    let { description, amount, date } = Form.getValues();
+    amount = Utils.formatAmount(amount);
+    date = Utils.formatDate(date);
+    return {
+      description,
+      amount,
+      date,
+    };
+  },
+  saveTransaction(transaction) {
+    Transaction.add(transaction);
+  },
+  clearFields() {
+    Form.description.value = "";
+    Form.amount.value = "";
+    Form.date.value = "";
+  },
   submit(event) {
     event.preventDefault();
     //capturar o erro disparado pelo throw
     try {
-      //verificar se todas as informacoes foram preenchidas
+      //verificar se os campos estão válidos
       Form.validateFields();
-      // const transaction = Form.formatValues();
-      //adiciona a transação
-      // Transaction.add(transaction);
-      //formator os dados para salvar
-      //Form.formatData()
-      //salvar
-      //apagar os dados do formulario
-      //quero que o modal feche
-      //atualizar a aplicaçao
+      //pegar transação formatada
+      const trasaction = Form.FormatValues();
+      //salvar transação
+      Form.saveTransaction(trasaction);
+      //limpar
+      Form.clearFields();
+      //fecha modal
+      Modal.close();
     } catch (error) {
       alert(error.message);
     }
   },
-
-  // formatData(){}
 };
 
 //para cada elemento será executado, como argumento, uma funcionalidade
@@ -220,10 +216,11 @@ const Form = {
 //} o forEach só é uma outra forma de escrever o que está acima
 const App = {
   init() {
-    Transaction.all.forEach((transaction) => {
-      DOM.addTransaction(transaction);
+    Transaction.all.forEach((transaction, index) => {
+      DOM.addTransaction(transaction, index);
     });
     DOM.updateBalance();
+    Storage.set(Transaction.all)
   },
   reload() {
     DOM.clearTransactions();
